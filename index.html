@@ -43,7 +43,7 @@
             position: relative;
             width: 100%;
             max-width: 100%;
-            border-radius: 15px;
+            border-radius: 1px;
             overflow: hidden;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             margin-bottom: 30px;
@@ -60,13 +60,13 @@
             width: auto;
             height: auto;
             object-fit: contain;
-            transition: opacity 0.5s ease-in-out, transform 0.5s ease;
+            transition: opacity 0.s ease-in-out, transform 0.s ease;
             display: block;
         }
 
         .photo.fade-out {
             opacity: 0;
-            transform: scale(0.95);
+            transform: scale(0.9);
         }
 
         .photo.fade-in {
@@ -83,16 +83,16 @@
         }
 
         .nav-btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(13deg, #667eea 0%, #764ba2 100%);
             color: white;
             border: none;
-            padding: 15px 35px;
+            padding: 1px 3px;
             font-size: 1.1rem;
             font-weight: 700;
-            border-radius: 50px;
+            border-radius: 0px;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 px 1px rgba(102, 126, 234, 0.4);
             text-transform: uppercase;
             letter-spacing: 1px;
             display: flex;
@@ -102,7 +102,7 @@
 
         .nav-btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+            box-shadow: 0 8px 2px rgba(102, 126, 234, 0.6);
         }
 
         .nav-btn:active {
@@ -110,7 +110,7 @@
         }
 
         .nav-btn:disabled {
-            opacity: 0.5;
+            opacity: 0.;
             cursor: not-allowed;
             transform: none;
         }
@@ -141,15 +141,15 @@
             }
 
             .nav-btn {
-                padding: 12px 25px;
-                font-size: 0.95rem;
+                padding: 12px 2px;
+                font-size: 0.9rem;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>🎨 Фото-галерея</h1>
+        <h1>Артурность</h1>
         
         <div class="photo-container">
             <img id="photo" class="photo fade-in" src="" alt="Фото">
@@ -158,14 +158,14 @@
         <div class="button-container">
             <button class="nav-btn" id="prevBtn" onclick="prevPhoto()">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                    <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+                    <path d="M1.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
                 </svg>
                 Назад
             </button>
             <button class="nav-btn" id="nextBtn" onclick="nextPhoto()">
                 Вперед
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                    <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
+                    <path d="M10 6L8.9 7.41 13.17 12l-4.8 4.9L10 18l6-6z"/>
                 </svg>
             </button>
         </div>
@@ -185,9 +185,6 @@
         const photos = [
             'images/photo1.jpg',
             'images/photo2.jpg',
-            'images/photo3.jpg',
-            'images/photo4.jpg',
-            'images/photo5.jpg',
             // Добавьте больше фотографий здесь...
         ];
 
@@ -227,7 +224,7 @@
                     photo.classList.remove('fade-out');
                     photo.classList.add('fade-in');
                     updateButtons();
-                }, 250);
+                }, 20);
             }
         }
 
@@ -243,7 +240,7 @@
                     photo.classList.remove('fade-out');
                     photo.classList.add('fade-in');
                     updateButtons();
-                }, 250);
+                }, 20);
             }
         }
 
