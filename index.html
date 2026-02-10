@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Галерея фото</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .photo-container {
+            position: relative;
+            width: 100%;
+            max-width: 100%;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #f0f0f0;
+            min-height: 400px;
+        }
+
+        .photo {
+            max-width: 100%;
+            max-height: 80vh;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            transition: opacity 0.5s ease-in-out, transform 0.5s ease;
+            display: block;
+        }
+
+        .photo.fade-out {
+            opacity: 0;
+            transform: scale(0.95);
+        }
+
+        .photo.fade-in {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .button-container {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 35px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+        }
+
+        .nav-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .nav-btn svg {
+            width: 20px;
+            height: 20px;
+            fill: white;
+        }
+
+        .photo-counter {
+            margin-top: 20px;
+            color: #666;
+            font-size: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .photo {
+                max-height: 60vh;
+            }
+
+            .nav-btn {
+                padding: 12px 25px;
+                font-size: 0.95rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎨 Фото-галерея</h1>
+        
+        <div class="photo-container">
+            <img id="photo" class="photo fade-in" src="" alt="Фото">
+        </div>
+
+        <div class="button-container">
+            <button class="nav-btn" id="prevBtn" onclick="prevPhoto()">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+                </svg>
+                Назад
+            </button>
+            <button class="nav-btn" id="nextBtn" onclick="nextPhoto()">
+                Вперед
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
+                </svg>
+            </button>
+        </div>
+
+        <div class="photo-counter">
+            Фото <span id="counter">1</span> из <span id="total">0</span>
+        </div>
+    </div>
+
+    <script>
+        // ========================================
+        // ДОБАВЬТЕ СЮДА СВОИ ФОТОГРАФИИ!
+        // ========================================
+        // Просто укажите путь к вашим изображениям
+        // Например: 'images/photo1.jpg', 'images/photo2.jpg'
+        
+        const photos = [
+            'images/photo1.jpg',
+            'images/photo2.jpg',
+            'images/photo3.jpg',
+            'images/photo4.jpg',
+            'images/photo5.jpg',
+            // Добавьте больше фотографий здесь...
+        ];
+
+        // ========================================
+        
+        let currentPhoto = 0;
+        const photo = document.getElementById('photo');
+        const counter = document.getElementById('counter');
+        const total = document.getElementById('total');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+
+        // Инициализация
+        function init() {
+            total.textContent = photos.length;
+            if (photos.length > 0) {
+                loadPhoto(0);
+            }
+            updateButtons();
+        }
+
+        function loadPhoto(index) {
+            photo.src = photos[index];
+            counter.textContent = index + 1;
+            currentPhoto = index;
+        }
+
+        function nextPhoto() {
+            if (currentPhoto < photos.length - 1) {
+                photo.classList.remove('fade-in');
+                photo.classList.add('fade-out');
+
+                setTimeout(() => {
+                    currentPhoto++;
+                    loadPhoto(currentPhoto);
+                    
+                    photo.classList.remove('fade-out');
+                    photo.classList.add('fade-in');
+                    updateButtons();
+                }, 250);
+            }
+        }
+
+        function prevPhoto() {
+            if (currentPhoto > 0) {
+                photo.classList.remove('fade-in');
+                photo.classList.add('fade-out');
+
+                setTimeout(() => {
+                    currentPhoto--;
+                    loadPhoto(currentPhoto);
+
+                    photo.classList.remove('fade-out');
+                    photo.classList.add('fade-in');
+                    updateButtons();
+                }, 250);
+            }
+        }
+
+        function updateButtons() {
+            prevBtn.disabled = currentPhoto === 0;
+            nextBtn.disabled = currentPhoto === photos.length - 1;
+        }
+
+        // Переключение по клавишам
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                e.preventDefault();
+                nextPhoto();
+            } else if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                prevPhoto();
+            }
+        });
+
+        // Запуск при загрузке страницы
+        window.addEventListener('load', init);
+    </script>
+</body>
+</html>
