@@ -94,7 +94,7 @@
             border-radius: 50px;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 5px 15px rgba(75, 97, 196, 0.4);
             text-transform: uppercase;
             letter-spacing: 1px;
             display: flex;
@@ -106,7 +106,7 @@
 
         .nav-btn:hover:not(:disabled) {
             transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+            box-shadow: 0 8px 25px rgba(75, 97, 196, 0.6);
         }
 
         .nav-btn:active:not(:disabled) {
@@ -122,6 +122,16 @@
             width: 18px;
             height: 18px;
             fill: white;
+        }
+
+        /* Кнопка игры */
+        .game-btn {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            box-shadow: 0 5px 15px rgba(245, 87, 108, 0.4);
+        }
+
+        .game-btn:hover {
+            box-shadow: 0 8px 25px rgba(245, 87, 108, 0.6);
         }
 
         .photo-counter {
@@ -249,6 +259,9 @@
                 </svg>
                 Назад
             </button>
+            <button class="nav-btn game-btn" onclick="window.location.href='game.html'">
+                🎮 Игра
+            </button>
             <button class="nav-btn" id="nextBtn" onclick="nextPhoto()">
                 Вперед
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -270,7 +283,7 @@
         
         // ВАРИАНТ 1: Автоматическое определение (если файлы названы по порядку)
         // Укажите общее количество фотографий
-        const TOTAL_PHOTOS = 2; // Измените на ваше количество
+        const TOTAL_PHOTOS = 10; // Измените на ваше количество
         
         // Автоматически создаём массив: photo1.jpg, photo2.jpg, photo3.jpg...
         const photos = Array.from({ length: TOTAL_PHOTOS }, (_, i) => 
